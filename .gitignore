@@ -1,0 +1,13 @@
+# ROS 相关
+build/
+install/
+log/
+
+# IDE 相关
+.vscode/
+.idea/
+
+# 其他
+*~
+*.swp
+.DS_Store
