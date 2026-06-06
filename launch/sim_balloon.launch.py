@@ -6,13 +6,10 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 def generate_launch_description():
-    # 1. 找到当前 detect_object 功能包安装在 share 的路径
-    pkg_detect_object = get_package_share_directory('detect_object')
+    pkg_uav_target_tracking = get_package_share_directory('uav_target_tracking')
     
-    # 2. 默认的 SDF 模型路径（ROS2中推荐放置在 pkg_detect_object 路径下）
-    default_model_path = os.path.join(pkg_detect_object, 'models', 'RedBall', 'model.sdf')
-
-    # 3. 声明 Launch 参数 (Arguments)
+    default_model_path = os.path.join(pkg_uav_target_tracking, 'models', 'RedBall', 'model.sdf')
+    
     camera_topic_arg = DeclareLaunchArgument(
         'camera_topic', default_value='/iris/usb_cam/image_raw',
         description='Camera image topic name'
@@ -47,7 +44,7 @@ def generate_launch_description():
 
     # 5. 启动我们刚才重构好的自定义 ROS2 气球检测节点
     detect_balloon_node = Node(
-        package='detect_object',
+        package='duav_target_tracking',
         executable='detect_balloon',      # 必须与 CMakeLists.txt 中编译出来的可执行文件名一致
         name='detect_balloon',
         output='screen',

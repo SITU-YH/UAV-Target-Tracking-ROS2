@@ -86,7 +86,7 @@ private:
 
         if (save_video_ && video_write_first_) {
             video_w_.open(save_path_, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 30.0, cv::Size(imgOriginal.cols, imgOriginal.rows), true);
-            video_write_first = false;
+            video_write_first_ = false;
         }
 
         cv::Mat imgBalance = WhiteBalance_PRA(imgOriginal);

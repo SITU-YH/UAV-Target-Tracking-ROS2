@@ -32,14 +32,14 @@ source install/setup.bash
 ### 1. 撞击红球
 
 ```bash
-ros2 launch detect_object sim_balloon.launch.py
+ros2 launch uav_target_tracking sim_balloon.launch.py
 
 ```
 
 ### 2. 穿越圆形门框
 
 ```bash
-ros2 launch detect_object sim_doorframe.launch.py
+ros2 launch uav_target_tracking sim_doorframe.launch.py
 
 ```
 

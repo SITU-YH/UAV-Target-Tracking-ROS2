@@ -7,10 +7,10 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # 1. 获取包所在共享路径
-    pkg_detect_object = get_package_share_directory('detect_object')
+    pkg_uav_target_tracking = get_package_share_directory('uav_target_tracking')
     
     # 2. 默认的 CircularFrame 门框模型路径
-    default_model_path = os.path.join(pkg_detect_object, 'models', 'CircularFrame', 'model.sdf')
+    default_model_path = os.path.join(pkg_uav_target_tracking, 'models', 'CircularFrame', 'model.sdf')
 
     # 3. 声明 Launch 参数
     camera_topic_arg = DeclareLaunchArgument(
@@ -47,7 +47,7 @@ def generate_launch_description():
 
     # 5. 启动自定义的 ROS2 门框检测节点
     detect_doorframe_node = Node(
-        package='detect_object',
+        package='uav_target_tracking',
         executable='detect_doorframe',
         name='detect_doorframe',
         output='screen',
