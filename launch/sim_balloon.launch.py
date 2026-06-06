@@ -9,7 +9,7 @@ def generate_launch_description():
     pkg_uav_target_tracking = get_package_share_directory('uav_target_tracking')
     
     default_model_path = os.path.join(pkg_uav_target_tracking, 'models', 'RedBall', 'model.sdf')
-    
+
     camera_topic_arg = DeclareLaunchArgument(
         'camera_topic', default_value='/iris/usb_cam/image_raw',
         description='Camera image topic name'
@@ -44,7 +44,7 @@ def generate_launch_description():
 
     # 5. 启动我们刚才重构好的自定义 ROS2 气球检测节点
     detect_balloon_node = Node(
-        package='duav_target_tracking',
+        package='uav_target_tracking',
         executable='detect_balloon',      # 必须与 CMakeLists.txt 中编译出来的可执行文件名一致
         name='detect_balloon',
         output='screen',

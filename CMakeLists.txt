@@ -36,7 +36,22 @@ ament_target_dependencies(detect_doorframe
 )
 target_link_libraries(detect_doorframe ${OpenCV_LIBS})
 
+# 添加联合任务控制节点
+add_executable(detect_mission src/detect_mission.cpp)
+ament_target_dependencies(detect_mission
+  rclcpp sensor_msgs geometry_msgs cv_bridge image_transport tf2 tf2_ros tf2_geometry_msgs px4_msgs
+)
+target_link_libraries(detect_mission ${OpenCV_LIBS})
+
+# 安装可执行文件
+install(TARGETS 
+  detect_balloon
+  detect_doorframe
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 install(DIRECTORY launch models
   DESTINATION share/${PROJECT_NAME}
 )
+
 ament_package()
