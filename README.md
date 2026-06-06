@@ -20,7 +20,7 @@
 cd ~/ros2_ws/src
 git clone https://github.com/SITU-YH/uav-target-tracking-ros2.git
 cd ..
-colcon build --packages-select detect_object
+colcon build --packages-select uav_target_tracking
 source install/setup.bash
 
 ```
