@@ -2,7 +2,7 @@
 
 ---
 
-# Detect Object 
+# UAV Target Tracking ROS2
 
 基于 ROS2 和 PX4 的无人机视觉目标检测与控制程序（支持红球撞击、圆环穿越等）。
 
@@ -37,33 +37,44 @@ source install/setup.bash
 
 ## 运行方法
 
+为了跑通完整的联合仿真，请务必开 3个不同的终端窗口 按以下严格顺序启动。
 
-### 1. 启动 PX4 + Gazebo 仿真
-
-```bash
-cd ~/PX4-Autopilot
-make px4_sitl gazebo-classic_iris
-```
-
-### 2. 启动 XRCE-DDS Agent
+### 1. 启动 XRCE-DDS Agent 通信代理 (终端 1)
 
 ```bash
 MicroXRCEAgent udp4 -p 8888
 
 ```
 
-### 3. 加载圆环和红球
+### 2. 启动 PX4 + Gazebo 仿真 (终端 2) 
 
 ```bash
-bash $(ros2 pkg prefix uav_target_tracking)/share/uav_target_tracking/sh/sim_balloon.sh
-
+cd ~/PX4-Autopilot
+make px4_sitl gazebo-classic_iris
 ```
 
-## 主要功能
+### 3. 注入模型并启动算法总控 (终端 3)
 
-* **图像处理**：基于 OpenCV 的 HSV 颜色分割与轮廓提取。
-* **逻辑控制**：计算目标在图像中的偏差，并通过 ROS2 原生话题 `/fmu/in/trajectory_setpoint` 向飞控发送机体系（BODY）速度控制指令。
-* **视频录制**：支持启动时通过参数 `save_video:=true` 保存处理后的检测过程。
+```bash
+source ~/uav_ws/install/setup.bash
+ros2 launch uav_target_tracking sim_mission.launch.py
+```
+
+### 4. 解锁起飞 (在终端 2 中输入)
+
+```bash
+# 1. 解锁无人机电机
+commander arm
+
+# 2. 将无人机控制权交给你的 C++ 节点 (切入外部 Offboard 模式)
+commander mode offboard
+```
+
+## 主任务状态机控制逻辑
+
+* **Stage 1 (蓝色圆环追踪)**：识别前方圆环，利用速度闭环控制无人机对准圆环核心并不断逼近。
+* **Stage 2 (盲冲穿越)**：接近圆环至一定大小时，算法完全屏蔽画面并加大马力（0.6 m/s）笔直盲冲 2.5 秒以通过圆环。
+* **Stage 3 (红色气球追击)**：盲冲结束后状态机自动切换，算法开始在视野中捕捉远处的红球，并控制无人机精确加速实施撞击。
 
 ## 注意事项
 
@@ -72,30 +83,5 @@ bash $(ros2 pkg prefix uav_target_tracking)/share/uav_target_tracking/sh/sim_bal
 
 ---
 
-px4_msgs
 
 
-sudo apt update
-sudo apt install git cmake g++ build-essential libasio-dev libtinyxml2-dev -y
-MicroXRCEAgent udp4 -p 8888
-
-
-
-
-gazebo classic
-
-```bash
-# 1. 下载官方 Agent 源码
-cd ~
-git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
-cd Micro-XRCE-DDS-Agent
-
-# 2. 创建编译目录并编译
-mkdir build && cd build
-cmake ..
-make
-sudo make install
-
-# 3. 更新系统动态链接库
-sudo ldconfig
-```
