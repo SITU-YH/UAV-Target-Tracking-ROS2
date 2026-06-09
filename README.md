@@ -78,6 +78,6 @@ commander mode offboard
 * **参数配置**：可在 Launch 文件中通过参数动态修改相机话题名（`camera_topic`）。
 
 
-
+---
 基于 [Detect_Object](https://github.com/Lovely-XPP/Detect_Object) 的优秀工作，谨此致谢！🙏
 
