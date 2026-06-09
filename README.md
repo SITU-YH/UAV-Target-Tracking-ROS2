@@ -1,7 +1,3 @@
-本项目基于 [[Detect_Object](https://github.com/Lovely-XPP/Detect_Object.git)] 进行重构，适配 ROS2 Humble 环境，并优化了 PX4 通信架构
-
----
-
 # UAV Target Tracking ROS2
 
 基于 ROS2 和 PX4 的无人机视觉目标检测与控制程序（支持红球撞击、圆环穿越等）。
@@ -83,5 +79,5 @@ commander mode offboard
 
 ---
 
-
+基于 [Detect_Object](https://github.com/Lovely-XPP/Detect_Object) 的优秀工作，谨此致谢！🙏
 
