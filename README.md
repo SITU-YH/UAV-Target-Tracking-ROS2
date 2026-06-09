@@ -77,7 +77,7 @@ commander mode offboard
 * **坐标系**：本项目生成的控制指令基于无人机机体系，请确保飞控处于 Offboard 模式。
 * **参数配置**：可在 Launch 文件中通过参数动态修改相机话题名（`camera_topic`）。
 
----
+
 
 基于 [Detect_Object](https://github.com/Lovely-XPP/Detect_Object) 的优秀工作，谨此致谢！🙏
 
